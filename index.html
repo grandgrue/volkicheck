@@ -337,13 +337,25 @@
         // =====================================================
         
         function QuestionScreen({ questions, sessionId, onComplete }) {
+            const [shuffledQuestions, setShuffledQuestions] = useState([]);
             const [currentIndex, setCurrentIndex] = useState(0);
             const [isAnimating, setIsAnimating] = useState(false);
             const [animationClass, setAnimationClass] = useState('card-enter');
             const [responses, setResponses] = useState({});
 
-            const currentQuestion = questions[currentIndex];
-            const isLastQuestion = currentIndex === questions.length - 1;
+            // Fragen beim ersten Render zufällig mischen
+            React.useEffect(() => {
+                const shuffled = [...questions].sort(() => Math.random() - 0.5);
+                setShuffledQuestions(shuffled);
+            }, [questions]);
+
+            const currentQuestion = shuffledQuestions[currentIndex];
+            const isLastQuestion = currentIndex === shuffledQuestions.length - 1;
+
+            // Warten bis Fragen gemischt sind
+            if (shuffledQuestions.length === 0) {
+                return <LoadingScreen message="Fragen werden vorbereitet..." />;
+            }
 
             const handleResponse = async (response) => {
                 if (isAnimating) return;
@@ -396,7 +408,7 @@
                     </div>
                     
                     {/* Progress */}
-                    <ProgressBar current={currentIndex + 1} total={questions.length} />
+                    <ProgressBar current={currentIndex + 1} total={shuffledQuestions.length} />
                     
                     {/* Card Container */}
                     <div className="flex-1 relative min-h-[300px]">

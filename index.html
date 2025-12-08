@@ -332,24 +332,22 @@
             const positionClasses = {
                 top: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2',
                 bottom: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2',
-                left: 'left-0 top-1/2 -translate-y-1/2 -translate-x-1/2',
-                right: 'right-0 top-1/2 -translate-y-1/2 translate-x-1/2'
+                left: 'left-2 top-[30%] -translate-y-1/2',      // Höher und etwas nach innen
+                right: 'right-2 top-[30%] -translate-y-1/2'     // Höher und etwas nach innen
             };
-            
-            const isVertical = direction === 'top' || direction === 'bottom';
             
             return (
                 <button
                     onClick={() => onResponse(response.value)}
                     disabled={disabled}
-                    className={`absolute ${positionClasses[direction]} z-10 flex items-center gap-1.5 py-2 px-3 rounded-full shadow-lg transition-all touch-feedback disabled:opacity-50 hover:scale-110 active:scale-95`}
+                    className={`absolute ${positionClasses[direction]} z-10 flex items-center gap-1 py-2 px-2.5 rounded-full shadow-lg transition-all touch-feedback disabled:opacity-50 hover:scale-110 active:scale-95`}
                     style={{ 
-                        backgroundColor: response.color + '20',
+                        backgroundColor: 'white',
                         borderWidth: '2px',
-                        borderColor: response.color + '40'
+                        borderColor: response.color
                     }}
                 >
-                    <span className="text-lg">{response.emoji}</span>
+                    <span className="text-base">{response.emoji}</span>
                     <span className="text-xs font-semibold" style={{ color: response.color }}>{response.label}</span>
                 </button>
             );

@@ -26,6 +26,7 @@ CREATE TABLE questions (
 CREATE TABLE participants (
     id INT AUTO_INCREMENT PRIMARY KEY,
     session_id VARCHAR(64) NOT NULL UNIQUE,
+    lives_in_volketswil BOOLEAN DEFAULT NULL,
     gender ENUM('m', 'f', 'd') DEFAULT NULL,
     personality_type VARCHAR(20) DEFAULT NULL,
     avg_score DECIMAL(3,2) DEFAULT NULL,

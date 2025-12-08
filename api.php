@@ -81,12 +81,17 @@ function startSession() {
     $db = getDB();
     $sessionId = generateSessionId();
     
+    // lives_in_volketswil kann über POST oder GET kommen
+    $input = json_decode(file_get_contents('php://input'), true) ?: [];
+    $livesInVolketswil = isset($input['lives_in_volketswil']) ? ($input['lives_in_volketswil'] ? 1 : 0) : null;
+    
     $stmt = $db->prepare('
-        INSERT INTO participants (session_id, ip_hash, user_agent) 
-        VALUES (?, ?, ?)
+        INSERT INTO participants (session_id, lives_in_volketswil, ip_hash, user_agent) 
+        VALUES (?, ?, ?, ?)
     ');
     $stmt->execute([
         $sessionId,
+        $livesInVolketswil,
         hashIP($_SERVER['REMOTE_ADDR'] ?? ''),
         $_SERVER['HTTP_USER_AGENT'] ?? ''
     ]);
@@ -252,7 +257,7 @@ function getResult($sessionId) {
     
     // Participant holen
     $stmt = $db->prepare('
-        SELECT id, gender, personality_type, avg_score, is_low_score, completed_at
+        SELECT id, gender, personality_type, avg_score, is_low_score, lives_in_volketswil, completed_at
         FROM participants 
         WHERE session_id = ?
     ');
@@ -275,6 +280,18 @@ function getResult($sessionId) {
         $dimensionScores[$row['dimension']] = floatval($row['score']);
     }
     
+    // Top-Statements holen (die 2 am höchsten bewerteten Fragen der Person)
+    $stmt = $db->prepare('
+        SELECT q.question_text, r.response
+        FROM responses r
+        JOIN questions q ON r.question_id = q.id
+        WHERE r.participant_id = ?
+        ORDER BY FIELD(r.response, "sehr_wichtig", "wichtig", "egal", "unwichtig"), r.responded_at
+        LIMIT 2
+    ');
+    $stmt->execute([$participant['id']]);
+    $topStatements = $stmt->fetchAll();
+    
     // Vergleichsprozent berechnen
     $comparePercent = calculateComparePercent($participant['personality_type']);
     
@@ -293,7 +310,9 @@ function getResult($sessionId) {
         'avg_score' => floatval($participant['avg_score']),
         'is_low_score' => (bool)$participant['is_low_score'],
         'compare_percent' => $comparePercent,
-        'gender' => $gender
+        'gender' => $gender,
+        'lives_in_volketswil' => $participant['lives_in_volketswil'] === null ? null : (bool)$participant['lives_in_volketswil'],
+        'top_statements' => $topStatements
     ];
 }
 

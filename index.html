@@ -388,21 +388,21 @@
             );
         }
         
-        // Milestone Anzeige - unter dem Progress-Bar
+        // Milestone Anzeige - unter dem Progress-Bar (fixe Höhe)
         function MilestoneDisplay({ milestone }) {
-            if (!milestone) return null;
-            
             return (
-                <div className="flex justify-center py-2">
-                    <span 
-                        className="milestone-zoom text-xl font-bold"
-                        style={{ 
-                            color: '#0D9488',
-                            textShadow: '0 0 15px rgba(13, 148, 136, 0.4)'
-                        }}
-                    >
-                        {milestone}
-                    </span>
+                <div className="flex justify-center items-center h-8">
+                    {milestone && (
+                        <span 
+                            className="milestone-zoom text-xl font-bold"
+                            style={{ 
+                                color: '#0D9488',
+                                textShadow: '0 0 15px rgba(13, 148, 136, 0.4)'
+                            }}
+                        >
+                            {milestone}
+                        </span>
+                    )}
                 </div>
             );
         }

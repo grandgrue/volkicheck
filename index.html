@@ -466,8 +466,8 @@
                     <ProgressBar current={currentIndex + 1} total={shuffledQuestions.length} />
                     
                     {/* Card Container mit Buttons drum herum */}
-                    <div className="flex-1 flex items-center justify-center p-4">
-                        <div className="relative w-full max-w-sm" style={{ aspectRatio: '3/4' }}>
+                    <div className="flex-1 flex items-center justify-center px-4 pt-2 pb-8">
+                        <div className="relative w-full max-w-sm" style={{ aspectRatio: '4/5', maxHeight: 'calc(100vh - 220px)' }}>
                             {/* Richtungs-Buttons */}
                             <DirectionButton 
                                 response={RESPONSES.find(r => r.value === 'sehr_wichtig')} 
@@ -844,7 +844,7 @@
 
                 // Radar Chart (noch tiefer positioniert)
                 const radarCenterX = size / 2;
-                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 175;
+                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 195;
                 const radarRadius = 100;
                 const angleStep = (2 * Math.PI) / dims.length;
 

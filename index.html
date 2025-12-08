@@ -268,7 +268,7 @@
             return (
                 <div
                     ref={cardRef}
-                    className={`absolute inset-4 bg-white rounded-3xl shadow-2xl p-6 flex flex-col cursor-grab active:cursor-grabbing ${animationClass}`}
+                    className={`absolute inset-0 m-3 bg-white rounded-3xl shadow-2xl p-5 flex flex-col cursor-grab active:cursor-grabbing ${animationClass}`}
                     style={{
                         transform: `translate(${dragOffset.x}px, ${dragOffset.y}px) rotate(${rotation}deg)`,
                         opacity: isAnimating ? 1 : opacity
@@ -282,19 +282,19 @@
                     onTouchEnd={handleDragEnd}
                 >
                     {/* Kategorie */}
-                    <div className="flex items-center gap-2 mb-4">
+                    <div className="flex items-center gap-2 mb-3">
                         <span className="text-xl">{DIMENSIONS[question.dimension]?.emoji}</span>
                         <span className="text-sm text-gray-500">{question.category}</span>
                     </div>
                     
                     {/* Frage */}
-                    <div className="flex-1 flex items-center justify-center">
-                        <p className="text-xl text-center text-gray-800 leading-relaxed">
+                    <div className="flex-1 flex items-center justify-center px-2">
+                        <p className="text-lg text-center text-gray-800 leading-relaxed">
                             {question.question_text}
                         </p>
                     </div>
                     
-                    {/* Swipe Hints */}
+                    {/* Swipe Hints Overlay */}
                     {showHint && (
                         <div className={`absolute inset-0 rounded-3xl flex items-center justify-center pointer-events-none
                             ${showHint === 'sehr_wichtig' ? 'bg-green-500/20' : ''}
@@ -302,17 +302,15 @@
                             ${showHint === 'egal' ? 'bg-gray-500/20' : ''}
                             ${showHint === 'unwichtig' ? 'bg-red-500/20' : ''}
                         `}>
-                            <span className="text-4xl">
+                            <span className="text-5xl">
                                 {RESPONSES.find(r => r.value === showHint)?.emoji}
                             </span>
                         </div>
                     )}
                     
-                    {/* Swipe Anleitung */}
-                    <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs text-gray-400">
-                        <div>👈 Unwichtig</div>
-                        <div>👆 Sehr wichtig<br/>👇 Egal</div>
-                        <div>Wichtig 👉</div>
+                    {/* Dezenter Swipe-Hinweis */}
+                    <div className="text-center text-xs text-gray-300 mt-2">
+                        ← swipe oder tippe auf die Buttons →
                     </div>
                 </div>
             );
@@ -323,29 +321,37 @@
         // =====================================================
         
         function ResponseButtons({ onResponse, disabled }) {
-            // Reihenfolge passend zu den Swipe-Richtungen: Links, Oben, Unten, Rechts
-            const buttonOrder = [
-                RESPONSES.find(r => r.value === 'unwichtig'),    // 👈 Links
-                RESPONSES.find(r => r.value === 'sehr_wichtig'), // 👆 Oben
-                RESPONSES.find(r => r.value === 'egal'),         // 👇 Unten
-                RESPONSES.find(r => r.value === 'wichtig')       // 👉 Rechts
-            ];
+            // Buttons werden jetzt um die Karte herum platziert
+            // Diese Komponente wird nicht mehr verwendet - 
+            // stattdessen sind die Buttons direkt im QuestionScreen integriert
+            return null;
+        }
+        
+        // Einzelner Richtungs-Button
+        function DirectionButton({ response, direction, onResponse, disabled }) {
+            const positionClasses = {
+                top: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2',
+                bottom: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2',
+                left: 'left-0 top-1/2 -translate-y-1/2 -translate-x-1/2',
+                right: 'right-0 top-1/2 -translate-y-1/2 translate-x-1/2'
+            };
+            
+            const isVertical = direction === 'top' || direction === 'bottom';
             
             return (
-                <div className="grid grid-cols-4 gap-2 p-4">
-                    {buttonOrder.map((r) => (
-                        <button
-                            key={r.value}
-                            onClick={() => onResponse(r.value)}
-                            disabled={disabled}
-                            className="flex flex-col items-center gap-1 py-3 px-2 rounded-xl transition-all touch-feedback disabled:opacity-50"
-                            style={{ backgroundColor: r.color + '20' }}
-                        >
-                            <span className="text-2xl">{r.emoji}</span>
-                            <span className="text-xs font-medium" style={{ color: r.color }}>{r.label}</span>
-                        </button>
-                    ))}
-                </div>
+                <button
+                    onClick={() => onResponse(response.value)}
+                    disabled={disabled}
+                    className={`absolute ${positionClasses[direction]} z-10 flex items-center gap-1.5 py-2 px-3 rounded-full shadow-lg transition-all touch-feedback disabled:opacity-50 hover:scale-110 active:scale-95`}
+                    style={{ 
+                        backgroundColor: response.color + '20',
+                        borderWidth: '2px',
+                        borderColor: response.color + '40'
+                    }}
+                >
+                    <span className="text-lg">{response.emoji}</span>
+                    <span className="text-xs font-semibold" style={{ color: response.color }}>{response.label}</span>
+                </button>
             );
         }
 
@@ -461,21 +467,47 @@
                     {/* Progress */}
                     <ProgressBar current={currentIndex + 1} total={shuffledQuestions.length} />
                     
-                    {/* Card Container */}
-                    <div className="flex-1 relative min-h-[300px]">
-                        {currentQuestion && (
-                            <SwipeCard
-                                key={currentQuestion.id}
-                                question={currentQuestion}
-                                onResponse={handleResponse}
-                                isAnimating={isAnimating}
-                                animationClass={animationClass}
+                    {/* Card Container mit Buttons drum herum */}
+                    <div className="flex-1 flex items-center justify-center p-4">
+                        <div className="relative w-full max-w-sm" style={{ aspectRatio: '3/4' }}>
+                            {/* Richtungs-Buttons */}
+                            <DirectionButton 
+                                response={RESPONSES.find(r => r.value === 'sehr_wichtig')} 
+                                direction="top" 
+                                onResponse={handleResponse} 
+                                disabled={isAnimating} 
                             />
-                        )}
+                            <DirectionButton 
+                                response={RESPONSES.find(r => r.value === 'egal')} 
+                                direction="bottom" 
+                                onResponse={handleResponse} 
+                                disabled={isAnimating} 
+                            />
+                            <DirectionButton 
+                                response={RESPONSES.find(r => r.value === 'unwichtig')} 
+                                direction="left" 
+                                onResponse={handleResponse} 
+                                disabled={isAnimating} 
+                            />
+                            <DirectionButton 
+                                response={RESPONSES.find(r => r.value === 'wichtig')} 
+                                direction="right" 
+                                onResponse={handleResponse} 
+                                disabled={isAnimating} 
+                            />
+                            
+                            {/* Swipe Card */}
+                            {currentQuestion && (
+                                <SwipeCard
+                                    key={currentQuestion.id}
+                                    question={currentQuestion}
+                                    onResponse={handleResponse}
+                                    isAnimating={isAnimating}
+                                    animationClass={animationClass}
+                                />
+                            )}
+                        </div>
                     </div>
-                    
-                    {/* Response Buttons */}
-                    <ResponseButtons onResponse={handleResponse} disabled={isAnimating} />
                 </div>
             );
         }

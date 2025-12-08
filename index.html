@@ -67,6 +67,17 @@
         .float-animation { animation: float 2s ease-in-out infinite; }
         .pulse-animation { animation: pulse 2s ease-in-out infinite; }
         
+        /* Milestone Zoom Animation */
+        @keyframes milestoneZoom {
+            0% { transform: scale(0.3); opacity: 0; }
+            20% { transform: scale(1.1); opacity: 1; }
+            80% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .milestone-zoom {
+            animation: milestoneZoom 1.5s ease-out forwards;
+        }
+        
         /* Touch feedback */
         .touch-feedback:active { transform: scale(0.95); }
         
@@ -361,29 +372,30 @@
         
         function ProgressBar({ current, total }) {
             const percent = (current / total) * 100;
-            const milestones = [
-                { at: 10, text: '🎯 Guter Start!' },
-                { at: 15, text: '⚡ Halbzeit!' },
-                { at: 25, text: '🔥 Fast geschafft!' }
-            ];
-            
-            const currentMilestone = milestones.find(m => m.at === current);
             
             return (
                 <div className="px-4 py-2">
                     <div className="flex justify-between items-center mb-1">
                         <span className="text-sm text-gray-500">{current} / {total}</span>
-                        {currentMilestone && (
-                            <span className="text-sm font-medium text-teal-600 animate-pulse">
-                                {currentMilestone.text}
-                            </span>
-                        )}
                     </div>
                     <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                         <div 
                             className="h-full bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full transition-all duration-300"
                             style={{ width: `${percent}%` }}
                         />
+                    </div>
+                </div>
+            );
+        }
+        
+        // Milestone Overlay - erscheint in der Bildschirmmitte
+        function MilestoneOverlay({ milestone }) {
+            if (!milestone) return null;
+            
+            return (
+                <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
+                    <div className="milestone-zoom bg-white/95 backdrop-blur-sm px-8 py-5 rounded-3xl shadow-2xl">
+                        <span className="text-3xl font-bold text-teal-600">{milestone}</span>
                     </div>
                 </div>
             );
@@ -399,12 +411,28 @@
             const [isAnimating, setIsAnimating] = useState(false);
             const [animationClass, setAnimationClass] = useState('card-enter');
             const [responses, setResponses] = useState({});
+            const [showMilestone, setShowMilestone] = useState(null);
+
+            // Milestone Definitionen
+            const milestones = {
+                10: '🎯 Guter Start!',
+                15: '⚡ Halbzeit!',
+                25: '🔥 Fast geschafft!'
+            };
 
             // Fragen beim ersten Render zufällig mischen
             React.useEffect(() => {
                 const shuffled = [...questions].sort(() => Math.random() - 0.5);
                 setShuffledQuestions(shuffled);
             }, [questions]);
+
+            // Milestone anzeigen wenn erreicht
+            React.useEffect(() => {
+                if (milestones[currentIndex + 1]) {
+                    setShowMilestone(milestones[currentIndex + 1]);
+                    setTimeout(() => setShowMilestone(null), 1500);
+                }
+            }, [currentIndex]);
 
             const currentQuestion = shuffledQuestions[currentIndex];
             const isLastQuestion = currentIndex === shuffledQuestions.length - 1;
@@ -459,6 +487,9 @@
 
             return (
                 <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 flex flex-col">
+                    {/* Milestone Overlay */}
+                    <MilestoneOverlay milestone={showMilestone} />
+                    
                     {/* Header */}
                     <div className="p-4 text-center">
                         <h1 className="text-xl font-bold text-teal-700">volkicheck</h1>

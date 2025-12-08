@@ -763,14 +763,9 @@
                 ctx.font = 'bold 44px -apple-system, BlinkMacSystemFont, sans-serif';
                 ctx.fillText(typeName, size / 2, cardY + 140);
 
-                // Prozent Badge
+                // Prozent Text (ohne Hintergrund-Box)
                 const percentText = `${comparePercent}% sehen das ähnlich`;
                 ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, sans-serif';
-                const percentWidth = ctx.measureText(percentText).width + 36;
-                ctx.fillStyle = '#FFFFFF';
-                ctx.beginPath();
-                ctx.roundRect(size / 2 - percentWidth / 2, cardY + 158, percentWidth, 42, 21);
-                ctx.fill();
                 ctx.fillStyle = '#0D9488';
                 ctx.fillText(percentText, size / 2, cardY + 186);
 
@@ -847,9 +842,9 @@
                     ctx.fillText(`${Math.round(score / 3 * 100)}%`, cardX + 45 + labelWidth + barWidth - 10, barY + 25);
                 });
 
-                // Radar Chart (tiefer positioniert)
+                // Radar Chart (noch tiefer positioniert)
                 const radarCenterX = size / 2;
-                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 155;
+                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 175;
                 const radarRadius = 100;
                 const angleStep = (2 * Math.PI) / dims.length;
 

@@ -847,10 +847,10 @@
                     ctx.fillText(`${Math.round(score / 3 * 100)}%`, cardX + 45 + labelWidth + barWidth - 10, barY + 25);
                 });
 
-                // Radar Chart (kleiner, rechts unten in der Karte)
+                // Radar Chart (tiefer positioniert)
                 const radarCenterX = size / 2;
-                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 130;
-                const radarRadius = 95;
+                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 155;
+                const radarRadius = 100;
                 const angleStep = (2 * Math.PI) / dims.length;
 
                 // Achsenlinien
@@ -893,16 +893,31 @@
                 ctx.fill();
                 ctx.stroke();
 
-                // Radar Labels
-                ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.fillStyle = '#374151';
+                // Radar Labels (grössere Icons mit Text)
+                const dimLabels = { 
+                    klima: { emoji: '🌱', name: 'Klima' }, 
+                    quartier: { emoji: '🏘️', name: 'Quartier' }, 
+                    familie: { emoji: '👨‍👩‍👧', name: 'Familie' }, 
+                    mobilitaet: { emoji: '🚴', name: 'Mobilität' }, 
+                    demokratie: { emoji: '🤝', name: 'Demokratie' } 
+                };
+                
                 dims.forEach((dim, i) => {
                     const angle = i * angleStep - Math.PI / 2;
-                    let x = radarCenterX + (radarRadius + 35) * Math.cos(angle);
-                    let y = radarCenterY + (radarRadius + 35) * Math.sin(angle);
-                    ctx.textAlign = i === 0 ? 'center' : i < 3 ? 'left' : 'right';
-                    if (i >= 3) x -= 5; else if (i > 0) x += 5;
-                    ctx.fillText(DIMENSIONS[dim].emoji, x, y + 5);
+                    const labelDist = radarRadius + 50;
+                    let x = radarCenterX + labelDist * Math.cos(angle);
+                    let y = radarCenterY + labelDist * Math.sin(angle);
+                    
+                    // Emoji (grösser)
+                    ctx.font = '28px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(dimLabels[dim].emoji, x, y);
+                    
+                    // Text darunter
+                    ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.fillStyle = '#6B7280';
+                    ctx.fillText(dimLabels[dim].name, x, y + 22);
+                    ctx.fillStyle = '#374151';
                 });
 
                 // Footer (eine Zeile)

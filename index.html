@@ -87,6 +87,16 @@
         // =====================================================
         
         const API_URL = 'api.php';
+
+        // Volketswil Wappen als SVG-Komponente
+        const VolketswilWappen = ({ size = 80, className = "" }) => (
+            <svg width={size} height={size * 1.17} viewBox="0 0 241.08 282.39" className={className}>
+                <path d="m1 1 4.3469 182.58c3.1049 130.41 227.28 130.41 230.39 0l4.3469-182.58z" fill="#feeb00" stroke="#000" strokeWidth="2"/>
+                <path d="m120.54 269.54-13.357-41.726-42.814 9.2951 29.457-32.43-29.457-32.43 42.814 9.2951 13.357-41.726 13.357 41.726 42.814-9.2951-29.457 32.43 29.457 32.43-42.814-9.2951z" fill="#d64229" stroke="#000" strokeWidth="1"/>
+                <path d="m4.0299 128.26 233.02-1e-5 3.0299-127.26h-239.08z" fill="#fff" stroke="#000" strokeWidth="2"/>
+                <path d="m1.0044 1.0014 1.5 63.438h57.469v-63.438zm58.969 63.438v63.812h60.625v-63.812zm60.625 0h60.625v-63.438h-60.625zm60.625 0v63.812h55.812l1.5312-63.812z"/>
+            </svg>
+        );
         
         const DIMENSIONS = {
             klima: { name: 'Klima & Natur', color: '#16A34A', emoji: '🌱' },
@@ -181,7 +191,9 @@
             return (
                 <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 flex flex-col items-center justify-center p-6">
                     <div className="text-center max-w-md">
-                        <div className="text-6xl mb-4 float-animation">🏘️</div>
+                        <div className="mb-4 float-animation flex justify-center">
+                            <VolketswilWappen size={80} />
+                        </div>
                         <h1 className="text-3xl font-bold text-teal-700 mb-2">volkicheck</h1>
                         <p className="text-gray-600 mb-8">
                             Was ist dir wichtig für Volketswil?<br/>
@@ -946,9 +958,12 @@
 
             return (
                 <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50" style={{ paddingBottom: '2rem' }}>
-                    <div className="p-4 text-center">
-                        <h1 className="text-xl font-bold text-teal-700">volkicheck</h1>
-                        <p className="text-sm text-gray-500">Dein Ergebnis</p>
+                    <div className="p-4 flex items-center justify-center gap-3">
+                        <VolketswilWappen size={32} />
+                        <div className="text-center">
+                            <h1 className="text-xl font-bold text-teal-700">volkicheck</h1>
+                            <p className="text-sm text-gray-500">Dein Ergebnis</p>
+                        </div>
                     </div>
                     
                     <div className="px-4 pb-8">

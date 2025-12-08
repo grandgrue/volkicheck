@@ -661,15 +661,13 @@
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, size, size);
 
-                // Volketswil Wappen als Hintergrund-Dekoration (oben rechts, gross)
-                const drawWappen = (x, y, wappenSize, opacity) => {
+                // Wappen zeichnen Funktion
+                const drawWappen = (x, y, wappenSize) => {
                     ctx.save();
-                    ctx.globalAlpha = opacity;
                     ctx.translate(x, y);
                     const scale = wappenSize / 282.39;
                     ctx.scale(scale, scale);
                     
-                    // Wappen-Pfade
                     ctx.fillStyle = '#feeb00';
                     ctx.strokeStyle = '#000';
                     ctx.lineWidth = 2 / scale;
@@ -738,23 +736,16 @@
                     
                     ctx.restore();
                 };
-                
-                // Wappen oben rechts (gross, transparent)
-                drawWappen(size * 0.62, -30, 220, 0.12);
-                // Wappen unten links (klein, transparent)
-                drawWappen(-40, size * 0.72, 160, 0.08);
 
-                // Header
+                // Header mit Wappen
+                drawWappen(size / 2 - 120, 25, 50);
                 ctx.fillStyle = '#0D9488';
-                ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('volkicheck', size / 2, 60);
-                ctx.fillStyle = '#6B7280';
-                ctx.font = '24px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.fillText('Mein Ergebnis', size / 2, 95);
+                ctx.font = 'bold 42px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('volkicheck', size / 2 - 55, 62);
 
                 // Karte
-                const cardX = 80, cardY = 130, cardW = size - 160, cardH = 750;
+                const cardX = 60, cardY = 100, cardW = size - 120, cardH = 900;
                 ctx.shadowColor = 'rgba(0,0,0,0.1)';
                 ctx.shadowBlur = 30;
                 ctx.shadowOffsetY = 10;
@@ -765,47 +756,104 @@
                 ctx.shadowColor = 'transparent';
 
                 // Emoji & Name
-                ctx.font = '80px Arial';
+                ctx.font = '72px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(personality.emoji, size / 2, cardY + 100);
+                ctx.fillText(personality.emoji, size / 2, cardY + 80);
                 ctx.fillStyle = personality.color;
-                ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.fillText(typeName, size / 2, cardY + 165);
+                ctx.font = 'bold 44px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText(typeName, size / 2, cardY + 140);
 
                 // Prozent Badge
                 const percentText = `${comparePercent}% sehen das ähnlich`;
-                ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, sans-serif';
-                const percentWidth = ctx.measureText(percentText).width + 40;
+                ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, sans-serif';
+                const percentWidth = ctx.measureText(percentText).width + 36;
                 ctx.fillStyle = '#FFFFFF';
                 ctx.beginPath();
-                ctx.roundRect(size / 2 - percentWidth / 2, cardY + 185, percentWidth, 50, 25);
+                ctx.roundRect(size / 2 - percentWidth / 2, cardY + 158, percentWidth, 42, 21);
                 ctx.fill();
                 ctx.fillStyle = '#0D9488';
-                ctx.fillText(percentText, size / 2, cardY + 218);
+                ctx.fillText(percentText, size / 2, cardY + 186);
 
-                // Beschreibung
+                // Beschreibung (kompakter)
                 ctx.fillStyle = '#4B5563';
-                ctx.font = '24px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
                 const words = personality.description.split(' ');
-                let line = '', y = cardY + 275;
+                let line = '', y = cardY + 235;
                 for (const word of words) {
                     const testLine = line + word + ' ';
                     if (ctx.measureText(testLine).width > cardW - 80 && line) {
                         ctx.fillText(line.trim(), size / 2, y);
                         line = word + ' ';
-                        y += 32;
+                        y += 28;
                     } else {
                         line = testLine;
                     }
                 }
                 ctx.fillText(line.trim(), size / 2, y);
 
-                // Radar Chart
-                const radarCenterX = size / 2, radarCenterY = cardY + 580, radarRadius = 105;
+                // Trennlinie
+                const separatorY = y + 35;
+                ctx.strokeStyle = '#E5E7EB';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(cardX + 40, separatorY);
+                ctx.lineTo(cardX + cardW - 40, separatorY);
+                ctx.stroke();
+
+                // "Deine Top-Themen" Titel
+                ctx.fillStyle = '#374151';
+                ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Deine Top-Themen', size / 2, separatorY + 40);
+
+                // Top 3 Balken
                 const dims = Object.keys(DIMENSIONS);
+                const sortedDims = Object.entries(scores)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3);
+                
+                const barStartY = separatorY + 65;
+                const barHeight = 38;
+                const barGap = 15;
+                const barMaxWidth = cardW - 100;
+                const labelWidth = 160;
+
+                sortedDims.forEach(([dim, score], index) => {
+                    const barY = barStartY + index * (barHeight + barGap);
+                    const dimInfo = DIMENSIONS[dim];
+                    const barWidth = (score / 3) * (barMaxWidth - labelWidth);
+                    
+                    // Label (Emoji + Name)
+                    ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.fillStyle = '#374151';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${dimInfo.emoji} ${dimInfo.name.split(' ')[0]}`, cardX + 50, barY + 26);
+                    
+                    // Balken Hintergrund
+                    ctx.fillStyle = '#E5E7EB';
+                    ctx.beginPath();
+                    ctx.roundRect(cardX + 50 + labelWidth, barY, barMaxWidth - labelWidth, barHeight, 8);
+                    ctx.fill();
+                    
+                    // Balken gefüllt
+                    ctx.fillStyle = dimInfo.color;
+                    ctx.beginPath();
+                    ctx.roundRect(cardX + 50 + labelWidth, barY, barWidth, barHeight, 8);
+                    ctx.fill();
+                    
+                    // Prozent-Wert
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(`${Math.round(score / 3 * 100)}%`, cardX + 45 + labelWidth + barWidth - 10, barY + 25);
+                });
+
+                // Radar Chart (kleiner, rechts unten in der Karte)
+                const radarCenterX = size / 2;
+                const radarCenterY = barStartY + 3 * (barHeight + barGap) + 130;
+                const radarRadius = 95;
                 const angleStep = (2 * Math.PI) / dims.length;
 
-                // Achsenlinien vom Zentrum zu den Ecken
+                // Achsenlinien
                 ctx.strokeStyle = '#D1D5DB';
                 ctx.lineWidth = 2;
                 dims.forEach((_, i) => {
@@ -816,9 +864,7 @@
                     ctx.stroke();
                 });
 
-                // Konzentrische Ringe (Levels)
-                ctx.strokeStyle = '#D1D5DB';
-                ctx.lineWidth = 2;
+                // Konzentrische Ringe
                 for (const level of [0.33, 0.66, 1]) {
                     ctx.beginPath();
                     dims.forEach((_, i) => {
@@ -831,6 +877,7 @@
                     ctx.stroke();
                 }
 
+                // Radar-Fläche
                 ctx.fillStyle = personality.color + '40';
                 ctx.strokeStyle = personality.color;
                 ctx.lineWidth = 3;
@@ -846,27 +893,23 @@
                 ctx.fill();
                 ctx.stroke();
 
-                // Labels
-                const dimLabels = { klima: '🌱 Klima', quartier: '🏘️ Quartier', familie: '👨‍👩‍👧 Familie', mobilitaet: '🚴 Mobilität', demokratie: '🤝 Demokratie' };
-                ctx.font = '22px -apple-system, BlinkMacSystemFont, sans-serif';
+                // Radar Labels
+                ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
                 ctx.fillStyle = '#374151';
                 dims.forEach((dim, i) => {
                     const angle = i * angleStep - Math.PI / 2;
-                    let x = radarCenterX + (radarRadius + 45) * Math.cos(angle);
-                    let y = radarCenterY + (radarRadius + 45) * Math.sin(angle);
+                    let x = radarCenterX + (radarRadius + 35) * Math.cos(angle);
+                    let y = radarCenterY + (radarRadius + 35) * Math.sin(angle);
                     ctx.textAlign = i === 0 ? 'center' : i < 3 ? 'left' : 'right';
-                    if (i >= 3) x -= 10; else if (i > 0) x += 10;
-                    ctx.fillText(dimLabels[dim], x, y + 7);
+                    if (i >= 3) x -= 5; else if (i > 0) x += 5;
+                    ctx.fillText(DIMENSIONS[dim].emoji, x, y + 5);
                 });
 
-                // Footer
+                // Footer (eine Zeile)
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#0D9488';
-                ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.fillText('Welcher Typ bist du?', size / 2, size - 80);
-                ctx.fillStyle = '#6B7280';
-                ctx.font = '26px -apple-system, BlinkMacSystemFont, sans-serif';
-                ctx.fillText('volkicheck.grue.ch', size / 2, size - 45);
+                ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Welcher Typ bist du? Mach den Test auf volkicheck.grue.ch', size / 2, size - 40);
 
                 setImageUrl(canvas.toDataURL('image/png'));
             };

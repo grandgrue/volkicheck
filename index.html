@@ -163,7 +163,9 @@
                 return (
                     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 flex flex-col items-center justify-center p-6">
                         <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center">
-                            <div className="text-5xl mb-4">📍</div>
+                            <div className="mb-4 flex justify-center">
+                                <VolketswilWappen size={60} />
+                            </div>
                             <h2 className="text-2xl font-bold text-gray-800 mb-2">Wohnst du in Volketswil?</h2>
                             <p className="text-gray-600 mb-6">
                                 Die Fragen beziehen sich auf unsere Gemeinde.
@@ -204,7 +206,7 @@
                             onClick={() => setShowLocationQuestion(true)}
                             className="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all touch-feedback"
                         >
-                            Los geht's! 🚀
+                            Los geht's!
                         </button>
                         
                         <p className="mt-8 text-xs text-gray-400">
@@ -1242,13 +1244,13 @@
         // =====================================================
         
         function App() {
-            const [screen, setScreen] = useState('intro'); // intro, questions, gender, loading, result
+            const [screen, setScreen] = useState('intro'); // intro, loading-start, questions, gender, loading-result, result
             const [questions, setQuestions] = useState([]);
             const [sessionId, setSessionId] = useState(null);
             const [result, setResult] = useState(null);
 
             const startQuiz = async (livesInVolketswil) => {
-                setScreen('loading');
+                setScreen('loading-start');
                 
                 try {
                     // Fragen laden
@@ -1278,7 +1280,7 @@
             };
 
             const handleGenderSelect = async (gender) => {
-                setScreen('loading');
+                setScreen('loading-result');
                 
                 try {
                     // Session abschliessen
@@ -1313,7 +1315,9 @@
             switch (screen) {
                 case 'intro':
                     return <IntroScreen onStart={startQuiz} />;
-                case 'loading':
+                case 'loading-start':
+                    return <LoadingScreen message="Deine Fragen werden vorbereitet..." />;
+                case 'loading-result':
                     return <LoadingScreen message="Dein Ergebnis wird berechnet..." />;
                 case 'questions':
                     return <QuestionScreen questions={questions} sessionId={sessionId} onComplete={handleQuestionsComplete} />;

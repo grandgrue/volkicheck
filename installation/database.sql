@@ -76,20 +76,20 @@ CREATE TABLE dimension_scores (
 INSERT INTO questions (id, category, dimension, question_text, pilot_score, sort_order) VALUES
 
 -- 🌱 UMWELT & KLIMA (5 Fragen) - Dimension: klima
-(42, 'Natur, Umwelt & Energie', 'klima', 'Volketswil braucht eine Klimastrategie mit verbindlichen Zielen und Massnahmen.', 2.50, 1),
+(42, 'Natur, Umwelt & Energie', 'klima', 'Volketswil braucht eine Klimastrategie mit klaren, festen Zielen und Massnahmen.', 2.50, 1),
 (38, 'Natur, Umwelt & Energie', 'klima', 'Volketswil braucht mehr Naturschutzflächen und verbundene Grünräume für Tiere und Pflanzen.', 2.71, 2),
 (41, 'Natur, Umwelt & Energie', 'klima', 'Die Gemeinde muss mehr Bäume pflanzen und bestehenden Baumbestand konsequent schützen.', 2.50, 3),
 (37, 'Natur, Umwelt & Energie', 'klima', 'Die Gemeinde soll eine Solarpflicht für Neubauten und Sanierungen einführen.', 2.14, 4),
-(44, 'Natur, Umwelt & Energie', 'klima', 'Volketswil muss die Versiegelung von Flächen stoppen und Entsiegelungsprojekte fördern.', 2.43, 5),
+(44, 'Natur, Umwelt & Energie', 'klima', 'Volketswil soll weniger zubetonieren und mehr Asphalt wieder zu Grünflächen machen.', 2.43, 5),
 
 -- 🌾 LANDWIRTSCHAFT (2 Fragen) - Dimension: klima
-(83, 'Landwirtschaft & Landschaft', 'klima', 'Die Gemeinde soll biologische und regionale Landwirtschaft aktiv fördern.', 2.79, 6),
+(83, 'Landwirtschaft & Landschaft', 'klima', 'Die Gemeinde soll Bio-Bauernhöfe und Produkte aus der Region aktiv fördern.', 2.79, 6),
 (82, 'Landwirtschaft & Landschaft', 'klima', 'Volketswil muss landwirtschaftliche Flächen vor Überbauung schützen.', 2.21, 7),
 
 -- 🏘️ WOHNEN & SIEDLUNG (3 Fragen) - Dimension: quartier
 (11, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Die Gemeinde soll beim Verdichten den Erhalt von Grünräumen und Bäumen priorisieren.', 2.50, 8),
-(10, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Volketswil muss aktiv bezahlbaren Wohnraum für Familien und Menschen mit tiefem Einkommen schaffen.', 1.93, 9),
-(17, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Die Gemeinde soll das Ortsbild schützen und gegen gesichtslose Überbauungen vorgehen.', 1.93, 10),
+(10, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Volketswil muss aktiv günstige Wohnungen für Familien und Menschen mit wenig Geld schaffen.', 1.93, 9),
+(17, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Die Gemeinde soll das Ortsbild schützen und gegen langweilige Einheitsbauten vorgehen.', 1.93, 10),
 
 -- 🏛️ ORTSENTWICKLUNG (2 Fragen) - Dimension: quartier
 (99, 'Zentrum & Ortsteile', 'quartier', 'Volketswil braucht einen attraktiven lebendigen Kern mit gleichzeitigem Erhalt der ländlichen Dorfteile.', 2.38, 11),
@@ -106,27 +106,27 @@ INSERT INTO questions (id, category, dimension, question_text, pilot_score, sort
 (22, 'Bildung & Kinderbetreuung', 'familie', 'Volketswil braucht mehr naturnahe Spiel- und Freiräume für Kinder.', 1.93, 18),
 
 -- ❤️ GESUNDHEIT & SOZIALES (3 Fragen) - Dimension: familie
-(52, 'Gesundheit & Soziales', 'familie', 'Volketswil muss mehr in die Integration von Zugewanderten und Sprachförderung investieren.', 2.36, 19),
-(55, 'Gesundheit & Soziales', 'familie', 'Die Gemeinde muss die Spitex-Versorgung sicherstellen und unterstützen.', 2.21, 20),
+(52, 'Gesundheit & Soziales', 'familie', 'Volketswil muss mehr investieren, damit Zugezogene sich einleben können und Deutsch lernen.', 2.36, 19),
+(55, 'Gesundheit & Soziales', 'familie', 'Die Gemeinde muss die Pflege zu Hause (Spitex) sicherstellen und unterstützen.', 2.21, 20),
 (57, 'Gesundheit & Soziales', 'familie', 'Die Gemeinde braucht kleinere, bezahlbare Alterswohnungen in allen Ortsteilen.', 2.21, 21),
 
 -- 👴 GENERATIONEN (1 Frage) - Dimension: familie
 (81, 'Generationen', 'familie', 'Volketswil soll Programme zur Bekämpfung von Einsamkeit im Alter auflegen.', 2.07, 22),
 
 -- 💼 WIRTSCHAFT & ARBEIT (2 Fragen) - Dimension: demokratie
-(32, 'Wirtschaft & Arbeit', 'demokratie', 'Volketswil soll bei der Standortförderung Wohnen und Lebensqualität gleichwertig zur Wirtschaftsförderung behandeln.', 2.57, 23),
-(30, 'Wirtschaft & Arbeit', 'demokratie', 'Volketswil muss bei der öffentlichen Beschaffung konsequent auf faire und umweltfreundliche Produkte setzen.', 2.07, 24),
+(32, 'Wirtschaft & Arbeit', 'demokratie', 'Für Volketswil sollen Wohnen und Lebensqualität gleich wichtig sein wie neue Arbeitsplätze.', 2.57, 23),
+(30, 'Wirtschaft & Arbeit', 'demokratie', 'Die Gemeinde soll beim Einkaufen konsequent auf faire und umweltfreundliche Produkte achten.', 2.07, 24),
 
 -- 💰 FINANZEN & STEUERN (2 Fragen) - Dimension: demokratie
 (72, 'Finanzen & Steuern', 'demokratie', 'Die Gemeinde muss bei Sparmassnahmen soziale Leistungen und Bildung verschonen.', 2.29, 25),
-(71, 'Finanzen & Steuern', 'demokratie', 'Volketswil soll soziale und umweltfreundliche Investitionen priorisieren statt Steuern zu senken.', 2.14, 26),
+(71, 'Finanzen & Steuern', 'demokratie', 'Volketswil soll lieber in Soziales und Umwelt investieren als Steuern senken.', 2.14, 26),
 
 -- 🤝 DEMOKRATIE & POLITIK (2 Fragen) - Dimension: demokratie
 (92, 'Demokratie & Politik', 'demokratie', 'Volketswil braucht ein Parlament zur besseren demokratischen Vertretung bei fast 20''000 Einwohnenden.', 2.57, 27),
 (77, 'Demokratie & Politik', 'demokratie', 'Die Gemeinde muss Informationen auch in einfacher Sprache und mehrsprachig bereitstellen.', 2.29, 28),
 
 -- 💻 DIGITALISIERUNG (1 Frage) - Dimension: demokratie
-(91, 'Digitalisierung', 'demokratie', 'Die Gemeinde soll den Einsatz von KI in der Verwaltung transparent und ethisch gestalten.', 2.36, 29),
+(91, 'Digitalisierung', 'demokratie', 'Die Gemeinde soll Künstliche Intelligenz (KI) in der Verwaltung offen und verantwortungsvoll einsetzen.', 2.36, 29),
 
 -- 🛡️ SICHERHEIT (1 Frage) - Dimension: familie
 (70, 'Sicherheit', 'familie', 'Volketswil muss Littering mit Mehrwegsystemen und mehr Abfalleimern bekämpfen.', 2.21, 30);

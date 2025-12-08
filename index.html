@@ -323,9 +323,17 @@
         // =====================================================
         
         function ResponseButtons({ onResponse, disabled }) {
+            // Reihenfolge passend zu den Swipe-Richtungen: Links, Oben, Unten, Rechts
+            const buttonOrder = [
+                RESPONSES.find(r => r.value === 'unwichtig'),    // 👈 Links
+                RESPONSES.find(r => r.value === 'sehr_wichtig'), // 👆 Oben
+                RESPONSES.find(r => r.value === 'egal'),         // 👇 Unten
+                RESPONSES.find(r => r.value === 'wichtig')       // 👉 Rechts
+            ];
+            
             return (
                 <div className="grid grid-cols-4 gap-2 p-4">
-                    {RESPONSES.map((r) => (
+                    {buttonOrder.map((r) => (
                         <button
                             key={r.value}
                             onClick={() => onResponse(r.value)}
@@ -623,14 +631,88 @@
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, size, size);
 
-                // Dekorative Kreise
-                ctx.fillStyle = personality.color + '15';
-                ctx.beginPath();
-                ctx.arc(size * 0.85, size * 0.15, 150, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(size * 0.1, size * 0.9, 100, 0, Math.PI * 2);
-                ctx.fill();
+                // Volketswil Wappen als Hintergrund-Dekoration (oben rechts, gross)
+                const drawWappen = (x, y, wappenSize, opacity) => {
+                    ctx.save();
+                    ctx.globalAlpha = opacity;
+                    ctx.translate(x, y);
+                    const scale = wappenSize / 282.39;
+                    ctx.scale(scale, scale);
+                    
+                    // Wappen-Pfade
+                    ctx.fillStyle = '#feeb00';
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2 / scale;
+                    ctx.beginPath();
+                    ctx.moveTo(1, 1);
+                    ctx.lineTo(5.35, 183.58);
+                    ctx.bezierCurveTo(8.45, 313.99, 232.63, 313.99, 235.74, 183.58);
+                    ctx.lineTo(240.08, 1);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = '#d64229';
+                    ctx.lineWidth = 1 / scale;
+                    ctx.beginPath();
+                    ctx.moveTo(120.54, 269.54);
+                    ctx.lineTo(107.18, 227.81);
+                    ctx.lineTo(64.37, 237.11);
+                    ctx.lineTo(93.83, 204.68);
+                    ctx.lineTo(64.37, 172.25);
+                    ctx.lineTo(107.18, 181.54);
+                    ctx.lineTo(120.54, 139.82);
+                    ctx.lineTo(133.9, 181.54);
+                    ctx.lineTo(176.71, 172.25);
+                    ctx.lineTo(147.25, 204.68);
+                    ctx.lineTo(176.71, 237.11);
+                    ctx.lineTo(133.9, 227.81);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = '#fff';
+                    ctx.lineWidth = 2 / scale;
+                    ctx.beginPath();
+                    ctx.moveTo(4.03, 128.26);
+                    ctx.lineTo(237.05, 128.26);
+                    ctx.lineTo(240.08, 1);
+                    ctx.lineTo(1, 1);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath();
+                    ctx.moveTo(1, 1);
+                    ctx.lineTo(2.5, 64.44);
+                    ctx.lineTo(59.97, 64.44);
+                    ctx.lineTo(59.97, 1);
+                    ctx.closePath();
+                    ctx.moveTo(59.97, 64.44);
+                    ctx.lineTo(59.97, 128.25);
+                    ctx.lineTo(120.6, 128.25);
+                    ctx.lineTo(120.6, 64.44);
+                    ctx.closePath();
+                    ctx.moveTo(120.6, 64.44);
+                    ctx.lineTo(181.22, 64.44);
+                    ctx.lineTo(181.22, 1);
+                    ctx.lineTo(120.6, 1);
+                    ctx.closePath();
+                    ctx.moveTo(181.22, 64.44);
+                    ctx.lineTo(181.22, 128.25);
+                    ctx.lineTo(237.03, 128.25);
+                    ctx.lineTo(238.56, 64.44);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.restore();
+                };
+                
+                // Wappen oben rechts (gross, transparent)
+                drawWappen(size * 0.62, -30, 220, 0.12);
+                // Wappen unten links (klein, transparent)
+                drawWappen(-40, size * 0.72, 160, 0.08);
 
                 // Header
                 ctx.fillStyle = '#0D9488';
@@ -693,8 +775,20 @@
                 const dims = Object.keys(DIMENSIONS);
                 const angleStep = (2 * Math.PI) / dims.length;
 
-                ctx.strokeStyle = '#E5E7EB';
-                ctx.lineWidth = 1;
+                // Achsenlinien vom Zentrum zu den Ecken
+                ctx.strokeStyle = '#D1D5DB';
+                ctx.lineWidth = 2;
+                dims.forEach((_, i) => {
+                    const angle = i * angleStep - Math.PI / 2;
+                    ctx.beginPath();
+                    ctx.moveTo(radarCenterX, radarCenterY);
+                    ctx.lineTo(radarCenterX + radarRadius * Math.cos(angle), radarCenterY + radarRadius * Math.sin(angle));
+                    ctx.stroke();
+                });
+
+                // Konzentrische Ringe (Levels)
+                ctx.strokeStyle = '#D1D5DB';
+                ctx.lineWidth = 2;
                 for (const level of [0.33, 0.66, 1]) {
                     ctx.beginPath();
                     dims.forEach((_, i) => {

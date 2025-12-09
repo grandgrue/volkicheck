@@ -78,58 +78,58 @@ INSERT INTO questions (id, category, dimension, question_text, pilot_score, sort
 -- 🌱 UMWELT & KLIMA (5 Fragen) - Dimension: klima
 (42, 'Natur, Umwelt & Energie', 'klima', 'Volketswil braucht eine Klimastrategie mit klaren, festen Zielen und Massnahmen.', 2.50, 1),
 (38, 'Natur, Umwelt & Energie', 'klima', 'Volketswil braucht mehr Naturschutzflächen und verbundene Grünräume für Tiere und Pflanzen.', 2.71, 2),
-(41, 'Natur, Umwelt & Energie', 'klima', 'Die Gemeinde muss mehr Bäume pflanzen und bestehenden Baumbestand konsequent schützen.', 2.50, 3),
-(37, 'Natur, Umwelt & Energie', 'klima', 'Die Gemeinde soll eine Solarpflicht für Neubauten und Sanierungen einführen.', 2.14, 4),
-(44, 'Natur, Umwelt & Energie', 'klima', 'Volketswil soll weniger zubetonieren und mehr Asphalt wieder zu Grünflächen machen.', 2.43, 5),
+(41, 'Natur, Umwelt & Energie', 'klima', 'Volketswil pflanzt mehr Bäume und schützt den bestehenden Baumbestand konsequent.', 2.50, 3),
+(37, 'Natur, Umwelt & Energie', 'klima', 'Volketswil führt eine Solarpflicht für Neubauten und Sanierungen ein.', 2.14, 4),
+(44, 'Natur, Umwelt & Energie', 'klima', 'Volketswil betoniert weniger zu und macht mehr Asphalt wieder zu Grünflächen.', 2.43, 5),
 
 -- 🌾 LANDWIRTSCHAFT (2 Fragen) - Dimension: klima
-(83, 'Landwirtschaft & Landschaft', 'klima', 'Die Gemeinde soll Bio-Bauernhöfe und Produkte aus der Region aktiv fördern.', 2.79, 6),
-(82, 'Landwirtschaft & Landschaft', 'klima', 'Volketswil muss landwirtschaftliche Flächen vor Überbauung schützen.', 2.21, 7),
+(83, 'Landwirtschaft & Landschaft', 'klima', 'Volketswil fördert Bio-Bauernhöfe und Produkte aus der Region aktiv.', 2.79, 6),
+(82, 'Landwirtschaft & Landschaft', 'klima', 'Volketswil schützt landwirtschaftliche Flächen vor Überbauung.', 2.21, 7),
 
 -- 🏘️ WOHNEN & SIEDLUNG (3 Fragen) - Dimension: quartier
-(11, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Die Gemeinde soll beim Verdichten den Erhalt von Grünräumen und Bäumen priorisieren.', 2.50, 8),
-(10, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Volketswil muss aktiv günstige Wohnungen für Familien und Menschen mit wenig Geld schaffen.', 1.93, 9),
-(17, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Die Gemeinde soll das Ortsbild schützen und gegen langweilige Einheitsbauten vorgehen.', 1.93, 10),
+(11, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Beim Verdichten priorisiert Volketswil den Erhalt von Grünräumen und Bäumen.', 2.50, 8),
+(10, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Volketswil schafft aktiv günstige Wohnungen für Familien und Menschen mit wenig Geld.', 1.93, 9),
+(17, 'Wohnen & Siedlungsentwicklung', 'quartier', 'Volketswil schützt das Ortsbild und geht gegen langweilige Einheitsbauten vor.', 1.93, 10),
 
 -- 🏛️ ORTSENTWICKLUNG (2 Fragen) - Dimension: quartier
 (99, 'Zentrum & Ortsteile', 'quartier', 'Volketswil braucht einen attraktiven lebendigen Kern mit gleichzeitigem Erhalt der ländlichen Dorfteile.', 2.38, 11),
-(63, 'Zentrum & Ortsteile', 'quartier', 'Die Gemeinde muss öffentliche Plätze einladender und lebendiger gestalten.', 2.00, 12),
+(63, 'Zentrum & Ortsteile', 'quartier', 'Volketswil gestaltet öffentliche Plätze einladender und lebendiger.', 2.00, 12),
 
 -- 🚴 VERKEHR & MOBILITÄT (3 Fragen) - Dimension: mobilitaet
 (109, 'Verkehr & Mobilität', 'mobilitaet', 'Volketswil braucht mehr Tempo-30-Zonen zum Schutz von Kindern und Anwohnenden.', 2.43, 13),
-(2, 'Verkehr & Mobilität', 'mobilitaet', 'Das Velowegnetz in Volketswil muss deutlich ausgebaut und sicherer gestaltet werden.', 2.21, 14),
+(2, 'Verkehr & Mobilität', 'mobilitaet', 'Volketswil baut das Velowegnetz deutlich aus und macht es sicherer.', 2.21, 14),
 (3, 'Verkehr & Mobilität', 'mobilitaet', 'Volketswil braucht mehr und bessere ÖV-Verbindungen mit höheren Taktfrequenzen.', 1.71, 15),
 
 -- 👨‍👩‍👧 BILDUNG & KINDERBETREUUNG (3 Fragen) - Dimension: familie
-(21, 'Bildung & Kinderbetreuung', 'familie', 'Die Gemeinde soll alle Schulwege konsequent sicherer machen.', 2.21, 16),
+(21, 'Bildung & Kinderbetreuung', 'familie', 'Volketswil macht alle Schulwege konsequent sicherer.', 2.21, 16),
 (18, 'Bildung & Kinderbetreuung', 'familie', 'Volketswil braucht mehr günstige Krippenplätze für alle Einkommensschichten.', 2.00, 17),
 (22, 'Bildung & Kinderbetreuung', 'familie', 'Volketswil braucht mehr naturnahe Spiel- und Freiräume für Kinder.', 1.93, 18),
 
 -- ❤️ GESUNDHEIT & SOZIALES (3 Fragen) - Dimension: familie
-(52, 'Gesundheit & Soziales', 'familie', 'Volketswil muss mehr investieren, damit Zugezogene sich einleben können und Deutsch lernen.', 2.36, 19),
-(55, 'Gesundheit & Soziales', 'familie', 'Die Gemeinde muss die Pflege zu Hause (Spitex) sicherstellen und unterstützen.', 2.21, 20),
+(52, 'Gesundheit & Soziales', 'familie', 'Volketswil investiert mehr, damit Zugezogene sich einleben können und Deutsch lernen.', 2.36, 19),
+(55, 'Gesundheit & Soziales', 'familie', 'Volketswil stellt die Pflege zu Hause (Spitex) sicher und unterstützt sie.', 2.21, 20),
 (57, 'Gesundheit & Soziales', 'familie', 'Die Gemeinde braucht kleinere, bezahlbare Alterswohnungen in allen Ortsteilen.', 2.21, 21),
 
 -- 👴 GENERATIONEN (1 Frage) - Dimension: familie
-(81, 'Generationen', 'familie', 'Volketswil soll Programme zur Bekämpfung von Einsamkeit im Alter auflegen.', 2.07, 22),
+(81, 'Generationen', 'familie', 'Volketswil legt Programme gegen Einsamkeit im Alter auf.', 2.07, 22),
 
 -- 💼 WIRTSCHAFT & ARBEIT (2 Fragen) - Dimension: demokratie
-(32, 'Wirtschaft & Arbeit', 'demokratie', 'Für Volketswil sollen Wohnen und Lebensqualität gleich wichtig sein wie neue Arbeitsplätze.', 2.57, 23),
-(30, 'Wirtschaft & Arbeit', 'demokratie', 'Die Gemeinde soll beim Einkaufen konsequent auf faire und umweltfreundliche Produkte achten.', 2.07, 24),
+(32, 'Wirtschaft & Arbeit', 'demokratie', 'In Volketswil sind Wohnen und Lebensqualität gleich wichtig wie neue Arbeitsplätze.', 2.57, 23),
+(30, 'Wirtschaft & Arbeit', 'demokratie', 'Volketswil achtet beim Einkaufen konsequent auf faire und umweltfreundliche Produkte.', 2.07, 24),
 
 -- 💰 FINANZEN & STEUERN (2 Fragen) - Dimension: demokratie
-(72, 'Finanzen & Steuern', 'demokratie', 'Die Gemeinde muss bei Sparmassnahmen soziale Leistungen und Bildung verschonen.', 2.29, 25),
-(71, 'Finanzen & Steuern', 'demokratie', 'Volketswil soll lieber in Soziales und Umwelt investieren als Steuern senken.', 2.14, 26),
+(72, 'Finanzen & Steuern', 'demokratie', 'Bei Sparmassnahmen verschont Volketswil soziale Leistungen und Bildung.', 2.29, 25),
+(71, 'Finanzen & Steuern', 'demokratie', 'Volketswil investiert lieber in Soziales und Umwelt als Steuern zu senken.', 2.14, 26),
 
 -- 🤝 DEMOKRATIE & POLITIK (2 Fragen) - Dimension: demokratie
 (92, 'Demokratie & Politik', 'demokratie', 'Volketswil braucht ein Parlament zur besseren demokratischen Vertretung bei fast 20''000 Einwohnenden.', 2.57, 27),
-(77, 'Demokratie & Politik', 'demokratie', 'Die Gemeinde muss Informationen auch in einfacher Sprache und mehrsprachig bereitstellen.', 2.29, 28),
+(77, 'Demokratie & Politik', 'demokratie', 'Volketswil stellt Informationen auch in einfacher Sprache und mehrsprachig bereit.', 2.29, 28),
 
 -- 💻 DIGITALISIERUNG (1 Frage) - Dimension: demokratie
-(91, 'Digitalisierung', 'demokratie', 'Die Gemeinde soll Künstliche Intelligenz (KI) in der Verwaltung offen und verantwortungsvoll einsetzen.', 2.36, 29),
+(91, 'Digitalisierung', 'demokratie', 'Volketswil setzt Künstliche Intelligenz (KI) in der Verwaltung offen und verantwortungsvoll ein.', 2.36, 29),
 
 -- 🛡️ SICHERHEIT (1 Frage) - Dimension: familie
-(70, 'Sicherheit', 'familie', 'Volketswil muss Littering mit Mehrwegsystemen und mehr Abfalleimern bekämpfen.', 2.21, 30);
+(70, 'Sicherheit', 'familie', 'Volketswil bekämpft Littering mit Mehrwegsystemen und mehr Abfalleimern.', 2.21, 30);
 
 -- =====================================================
 -- VIEW für Statistiken

@@ -1074,8 +1074,45 @@
             const livesInVolketswil = result.lives_in_volketswil;
             const topStatements = result.top_statements || [];
             
+            // Variante B: Tiefer Score (unabhängig vom Wohnort)
+            if (isLowScore) {
+                return (
+                    <div className="px-4 pb-6">
+                        <div className="bg-gradient-to-br from-slate-600 to-gray-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">
+                            <h3 className="text-xl font-bold mb-4 text-center">🏛️ Demokratie lebt von Vielfalt</h3>
+                            
+                            <p className="text-sm text-gray-200 mb-5 leading-relaxed">
+                                Du siehst einige Dinge anders – das ist wichtig für eine lebendige Demokratie.
+                                <br/><br/>
+                                Falls dir ein Thema besonders am Herzen liegt, engagiere dich in deiner Gemeinde. 
+                                Am <strong className="text-white">8. März 2025</strong> sind Wahlen – jede Stimme zählt!
+                            </p>
+                            
+                            <div className="space-y-3">
+                                <a 
+                                    href="https://www.volketswil.ch" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block w-full bg-white text-gray-700 py-3 rounded-xl font-semibold text-center hover:bg-gray-50 transition"
+                                >
+                                    🏘️ Gemeinde Volketswil
+                                </a>
+                                <a 
+                                    href="https://www.volketswil.ch/projekte/volketswil-braucht-dich.html/382" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block w-full bg-slate-500/30 text-white py-3 rounded-xl font-semibold text-center hover:bg-slate-500/50 transition"
+                                >
+                                    🗳️ Erneuerungswahl 2026
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
             // Variante A: Volketswiler mit hohem Score
-            if (livesInVolketswil && !isLowScore) {
+            if (livesInVolketswil) {
                 return (
                     <div className="px-4 pb-6">
                         <div className="bg-gradient-to-br from-teal-600 to-cyan-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">
@@ -1122,44 +1159,7 @@
                 );
             }
             
-            // Variante B: Volketswiler mit tiefem Score
-            if (livesInVolketswil && isLowScore) {
-                return (
-                    <div className="px-4 pb-6">
-                        <div className="bg-gradient-to-br from-slate-600 to-gray-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">
-                            <h3 className="text-xl font-bold mb-4 text-center">🏛️ Demokratie lebt von Vielfalt</h3>
-                            
-                            <p className="text-sm text-gray-200 mb-5 leading-relaxed">
-                                Du siehst einige Dinge anders – das ist wichtig für eine lebendige Demokratie.
-                                <br/><br/>
-                                Falls dir ein Thema besonders am Herzen liegt, engagiere dich in deiner Gemeinde. 
-                                Am <strong className="text-white">8. März 2025</strong> sind Wahlen – jede Stimme zählt!
-                            </p>
-                            
-                            <div className="space-y-3">
-                                <a 
-                                    href="https://www.volketswil.ch" 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-white text-gray-700 py-3 rounded-xl font-semibold text-center hover:bg-gray-50 transition"
-                                >
-                                    🏘️ Gemeinde Volketswil
-                                </a>
-                                <a 
-                                    href="https://www.volketswil.ch/projekte/volketswil-braucht-dich.html/382" 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-slate-500/30 text-white py-3 rounded-xl font-semibold text-center hover:bg-slate-500/50 transition"
-                                >
-                                    🗳️ Erneuerungswahl 2026
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            
-            // Variante C: Nicht-Volketswiler
+            // Variante C: Nicht-Volketswiler (mit hohem Score)
             return (
                 <div className="px-4 pb-6">
                     <div className="bg-gradient-to-br from-emerald-600 to-green-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">

@@ -1,0 +1,26 @@
+# Umgebungsvariablen (enthält Passwörter!)
+.env
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporäre Dateien
+tmp/
+temp/
+cache/
+
+# PHP
+vendor/
+composer.lock

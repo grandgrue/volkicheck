@@ -50,6 +50,23 @@
             from { transform: scale(0.95) translateY(20px); opacity: 0; }
             to { transform: scale(1) translateY(0); opacity: 1; }
         }
+        /* Rückwärts-Animationen (Karte kommt zurück) */
+        @keyframes returnFromLeft {
+            from { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0); opacity: 1; }
+        }
+        @keyframes returnFromRight {
+            from { transform: translateX(150%) rotate(20deg); opacity: 0; }
+            to { transform: translateX(0) rotate(0); opacity: 1; }
+        }
+        @keyframes returnFromUp {
+            from { transform: translateY(-150%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes returnFromDown {
+            from { transform: translateY(150%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
@@ -64,6 +81,10 @@
         .swipe-up { animation: swipeUp 0.3s ease-out forwards; }
         .swipe-down { animation: swipeDown 0.3s ease-out forwards; }
         .card-enter { animation: cardEnter 0.3s ease-out; }
+        .return-from-left { animation: returnFromLeft 0.4s ease-out; }
+        .return-from-right { animation: returnFromRight 0.4s ease-out; }
+        .return-from-up { animation: returnFromUp 0.4s ease-out; }
+        .return-from-down { animation: returnFromDown 0.4s ease-out; }
         .float-animation { animation: float 2s ease-in-out infinite; }
         .pulse-animation { animation: pulse 2s ease-in-out infinite; }
         
@@ -388,22 +409,20 @@
             );
         }
         
-        // Milestone Anzeige - unter dem Progress-Bar (fixe Höhe)
+        // Milestone Anzeige - inline im Zurück-Bereich
         function MilestoneDisplay({ milestone }) {
+            if (!milestone) return null;
+            
             return (
-                <div className="flex justify-center items-center h-8">
-                    {milestone && (
-                        <span 
-                            className="milestone-zoom text-xl font-bold"
-                            style={{ 
-                                color: '#0D9488',
-                                textShadow: '0 0 15px rgba(13, 148, 136, 0.4)'
-                            }}
-                        >
-                            {milestone}
-                        </span>
-                    )}
-                </div>
+                <span 
+                    className="milestone-zoom text-xl font-bold"
+                    style={{ 
+                        color: '#0D9488',
+                        textShadow: '0 0 15px rgba(13, 148, 136, 0.4)'
+                    }}
+                >
+                    {milestone}
+                </span>
             );
         }
 
@@ -417,6 +436,7 @@
             const [isAnimating, setIsAnimating] = useState(false);
             const [animationClass, setAnimationClass] = useState('card-enter');
             const [responses, setResponses] = useState({});
+            const [responseHistory, setResponseHistory] = useState([]); // Speichert Richtungen für Zurück-Animation
             const [showMilestone, setShowMilestone] = useState(null);
 
             // Milestone Definitionen
@@ -461,8 +481,9 @@
                 };
                 setAnimationClass(animMap[response]);
                 
-                // Antwort speichern
+                // Antwort und Richtung speichern
                 setResponses(prev => ({ ...prev, [currentQuestion.id]: response }));
+                setResponseHistory(prev => [...prev, { questionId: currentQuestion.id, response }]);
                 
                 // API Call
                 try {
@@ -491,6 +512,34 @@
                 }, 350);
             };
 
+            const handleGoBack = () => {
+                if (isAnimating || currentIndex === 0) return;
+                
+                setIsAnimating(true);
+                
+                // Letzte Antwort aus History holen
+                const lastEntry = responseHistory[responseHistory.length - 1];
+                
+                // Rückwärts-Animation basierend auf letzter Richtung
+                const returnAnimMap = {
+                    'sehr_wichtig': 'return-from-up',
+                    'wichtig': 'return-from-right',
+                    'egal': 'return-from-down',
+                    'unwichtig': 'return-from-left'
+                };
+                
+                // Sofort zurück gehen, Animation zeigt woher die Karte kommt
+                setCurrentIndex(prev => prev - 1);
+                setAnimationClass(returnAnimMap[lastEntry?.response] || 'card-enter');
+                
+                // History kürzen
+                setResponseHistory(prev => prev.slice(0, -1));
+                
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 400);
+            };
+
             return (
                 <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 flex flex-col">
                     {/* Header */}
@@ -501,8 +550,20 @@
                     {/* Progress */}
                     <ProgressBar current={currentIndex + 1} total={shuffledQuestions.length} />
                     
-                    {/* Milestone Anzeige */}
-                    <MilestoneDisplay milestone={showMilestone} />
+                    {/* Zurück-Link und Milestone */}
+                    <div className="flex justify-center items-center h-8">
+                        {currentIndex > 0 && !showMilestone ? (
+                            <button 
+                                onClick={handleGoBack}
+                                disabled={isAnimating}
+                                className="text-sm text-gray-400 hover:text-teal-600 transition disabled:opacity-50"
+                            >
+                                ← zurück
+                            </button>
+                        ) : (
+                            <MilestoneDisplay milestone={showMilestone} />
+                        )}
+                    </div>
                     
                     {/* Card Container mit Buttons drum herum */}
                     <div className="flex-1 flex items-center justify-center px-4 pt-2 pb-8">

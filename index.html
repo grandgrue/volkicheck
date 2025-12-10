@@ -559,7 +559,7 @@
                     <ProgressBar current={currentIndex + 1} total={shuffledQuestions.length} />
                     
                     {/* Zurück-Link und Milestone */}
-                    <div className="flex justify-center items-center h-6">
+                    <div className="flex justify-center items-center h-8">
                         {currentIndex > 0 && !showMilestone ? (
                             <button 
                                 onClick={handleGoBack}
@@ -574,8 +574,8 @@
                     </div>
                     
                     {/* Card Container mit Buttons drum herum */}
-                    <div className="flex-1 flex items-start justify-center px-4 pt-1 pb-20">
-                        <div className="relative w-full max-w-sm" style={{ aspectRatio: '1/1.1', maxHeight: 'calc(100vh - 280px)' }}>
+                    <div className="flex-1 flex items-center justify-center px-4 pt-2 pb-16" style={{ paddingBottom: '8%' }}>
+                        <div className="relative w-full max-w-sm mt-auto mb-auto" style={{ aspectRatio: '1/1.1', maxHeight: 'calc(100vh - 280px)', marginBottom: '12%' }}>
                             {/* Richtungs-Buttons */}
                             <DirectionButton 
                                 response={RESPONSES.find(r => r.value === 'sehr_wichtig')} 

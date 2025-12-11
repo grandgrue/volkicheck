@@ -102,6 +102,48 @@
             animation: milestoneZoom 1.8s ease-out forwards;
         }
         
+        /* Reveal Animationen */
+        @keyframes drumroll {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.05); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+        @keyframes revealText {
+            0% { opacity: 0; transform: scale(0.5); }
+            60% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes revealEmoji {
+            0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+            70% { transform: scale(1.3) rotate(10deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes revealType {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .drumroll { animation: drumroll 0.15s ease-in-out infinite; }
+        .sparkle { animation: sparkle 0.6s ease-out forwards; }
+        .reveal-text { animation: revealText 0.8s ease-out forwards; }
+        .reveal-emoji { animation: revealEmoji 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .reveal-type { animation: revealType 0.5s ease-out forwards; }
+        .shimmer-text {
+            background: linear-gradient(90deg, currentColor 40%, #fff 50%, currentColor 60%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 2s linear infinite;
+        }
+        
         /* Touch feedback */
         .touch-feedback:active { transform: scale(0.95); }
         
@@ -1214,6 +1256,121 @@
         }
 
         // =====================================================
+        // REVEAL SCREEN - Spannende Enthüllung
+        // =====================================================
+        
+        function RevealScreen({ result, onComplete }) {
+            const [phase, setPhase] = useState('drumroll'); // drumroll, reveal, transition
+            
+            const personality = PERSONALITY_TYPES[result.personality_type] || PERSONALITY_TYPES.balanced;
+            const typeName = personality.name[result.gender] || personality.name.d;
+            const genderArticle = result.gender === 'f' ? 'eine' : result.gender === 'm' ? 'ein' : 'ein*e';
+            
+            useEffect(() => {
+                // Phase 1: Trommelwirbel (1.5 Sekunden)
+                const timer1 = setTimeout(() => setPhase('reveal'), 1500);
+                
+                // Phase 2: Enthüllung zeigen (2.5 Sekunden)
+                const timer2 = setTimeout(() => setPhase('transition'), 4000);
+                
+                // Phase 3: Zum Result wechseln
+                const timer3 = setTimeout(() => onComplete(), 4800);
+                
+                return () => {
+                    clearTimeout(timer1);
+                    clearTimeout(timer2);
+                    clearTimeout(timer3);
+                };
+            }, [onComplete]);
+            
+            // Trommelwirbel-Phase
+            if (phase === 'drumroll') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-teal-600 via-cyan-600 to-teal-700 flex flex-col items-center justify-center p-6">
+                        {/* Pulsierende Kreise im Hintergrund */}
+                        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                            <div className="w-64 h-64 rounded-full bg-white/10 pulse-animation" style={{ animationDuration: '0.5s' }}></div>
+                            <div className="absolute w-48 h-48 rounded-full bg-white/10 pulse-animation" style={{ animationDuration: '0.4s', animationDelay: '0.1s' }}></div>
+                            <div className="absolute w-32 h-32 rounded-full bg-white/10 pulse-animation" style={{ animationDuration: '0.3s', animationDelay: '0.2s' }}></div>
+                        </div>
+                        
+                        {/* Fragezeichen mit Drumroll */}
+                        <div className="relative z-10 text-center">
+                            <div className="text-8xl mb-6 drumroll">🎯</div>
+                            <p className="text-white/90 text-xl font-medium">Dein Ergebnis wird enthüllt...</p>
+                        </div>
+                        
+                        {/* Sparkles */}
+                        <div className="absolute inset-0 pointer-events-none">
+                            {[...Array(8)].map((_, i) => (
+                                <div 
+                                    key={i}
+                                    className="absolute text-2xl sparkle"
+                                    style={{
+                                        left: `${15 + Math.random() * 70}%`,
+                                        top: `${15 + Math.random() * 70}%`,
+                                        animationDelay: `${Math.random() * 1}s`,
+                                        animationDuration: `${0.5 + Math.random() * 0.5}s`
+                                    }}
+                                >
+                                    ✨
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+            }
+            
+            // Enthüllungs-Phase
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-6"
+                     style={{ backgroundColor: personality.bgColor || '#f0fdfa' }}>
+                    
+                    {/* Mehr Sparkles bei der Enthüllung */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {[...Array(12)].map((_, i) => (
+                            <div 
+                                key={i}
+                                className="absolute text-3xl sparkle"
+                                style={{
+                                    left: `${5 + Math.random() * 90}%`,
+                                    top: `${5 + Math.random() * 90}%`,
+                                    animationDelay: `${Math.random() * 0.8}s`,
+                                    animationDuration: `${0.6 + Math.random() * 0.4}s`
+                                }}
+                            >
+                                ✨
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <div className={`relative z-10 text-center ${phase === 'transition' ? 'opacity-0 transition-opacity duration-500' : ''}`}>
+                        {/* "Du bist..." Text */}
+                        <p className="text-gray-600 text-xl mb-4 reveal-text">
+                            Du bist {genderArticle}
+                        </p>
+                        
+                        {/* Emoji */}
+                        <div 
+                            className="text-9xl mb-4 reveal-emoji"
+                            style={{ animationDelay: '0.3s' }}
+                        >
+                            {personality.emoji}
+                        </div>
+                        
+                        {/* Typ-Name */}
+                        <h1 
+                            className="text-4xl font-bold reveal-type"
+                            style={{ color: personality.color, animationDelay: '0.6s' }}
+                        >
+                            {typeName}
+                        </h1>
+                    </div>
+                </div>
+            );
+        }
+
+        // =====================================================
         // RESULT SCREEN
         // =====================================================
         
@@ -1350,7 +1507,7 @@
         // =====================================================
         
         function App() {
-            const [screen, setScreen] = useState('intro'); // intro, loading-start, questions, gender, loading-result, result
+            const [screen, setScreen] = useState('intro'); // intro, loading-start, questions, gender, loading-result, reveal, result
             const [questions, setQuestions] = useState([]);
             const [sessionId, setSessionId] = useState(null);
             const [result, setResult] = useState(null);
@@ -1401,7 +1558,7 @@
                     const rData = await rRes.json();
                     setResult(rData);
                     
-                    setScreen('result');
+                    setScreen('reveal');
                 } catch (e) {
                     console.error('Failed to complete', e);
                     alert('Fehler beim Berechnen. Bitte versuche es erneut.');
@@ -1418,6 +1575,10 @@
                 }
             }, [screen]);
 
+            const handleRevealComplete = () => {
+                setScreen('result');
+            };
+
             switch (screen) {
                 case 'intro':
                     return <IntroScreen onStart={startQuiz} />;
@@ -1429,6 +1590,8 @@
                     return <QuestionScreen questions={questions} sessionId={sessionId} onComplete={handleQuestionsComplete} />;
                 case 'gender':
                     return <GenderScreen onSelect={handleGenderSelect} />;
+                case 'reveal':
+                    return <RevealScreen result={result} onComplete={handleRevealComplete} />;
                 case 'result':
                     return <ResultScreen result={result} />;
                 default:

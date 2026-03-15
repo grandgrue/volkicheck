@@ -292,8 +292,7 @@
                         </button>
                         
                         <p className="mt-8 text-xs text-gray-400">
-                            Ein Projekt von Michael Grüebler<br/>
-                            Kandidat Gemeinderat Volketswil
+                            Ein Projekt von Michael Grüebler
                         </p>
                     </div>
                 </div>
@@ -1127,30 +1126,21 @@
                     <div className="px-4 pb-6">
                         <div className="bg-gradient-to-br from-slate-600 to-gray-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">
                             <h3 className="text-xl font-bold mb-4 text-center">🏛️ Demokratie lebt von Vielfalt</h3>
-                            
+
                             <p className="text-sm text-gray-200 mb-5 leading-relaxed">
                                 Du siehst einige Dinge anders – das ist wichtig für eine lebendige Demokratie.
                                 <br/><br/>
-                                Falls dir ein Thema besonders am Herzen liegt, engagiere dich in deiner Gemeinde. 
-                                Am <strong className="text-white">8. März 2025</strong> sind Wahlen – jede Stimme zählt!
+                                Falls dir ein Thema besonders am Herzen liegt, schau ob es in deiner Ortschaft eine Grüne Partei gibt, bei der du dich engagieren könntest.
                             </p>
-                            
+
                             <div className="space-y-3">
-                                <a 
-                                    href="https://www.volketswil.ch" 
+                                <a
+                                    href="https://gruene.ch"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="block w-full bg-white text-gray-700 py-3 rounded-xl font-semibold text-center hover:bg-gray-50 transition"
                                 >
-                                    🏘️ Gemeinde Volketswil
-                                </a>
-                                <a 
-                                    href="https://www.volketswil.ch/projekte/volketswil-braucht-dich.html/382" 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-slate-500/30 text-white py-3 rounded-xl font-semibold text-center hover:bg-slate-500/50 transition"
-                                >
-                                    🗳️ Erneuerungswahl 2026
+                                    💚 Grüne Schweiz
                                 </a>
                             </div>
                         </div>
@@ -1163,10 +1153,10 @@
                 return (
                     <div className="px-4 pb-6">
                         <div className="bg-gradient-to-br from-teal-600 to-cyan-600 rounded-3xl shadow-xl p-6 max-w-md mx-auto text-white">
-                            <h3 className="text-xl font-bold mb-4 text-center">🗳️ Deine Stimme zählt!</h3>
-                            
+                            <h3 className="text-xl font-bold mb-4 text-center">🌱 Bleib informiert!</h3>
+
                             <p className="text-teal-100 mb-3 text-sm">Dir ist wichtig, dass...</p>
-                            
+
                             <ul className="space-y-2 mb-5">
                                 {topStatements.slice(0, 2).map((s, i) => (
                                     <li key={i} className="flex items-start gap-2 text-sm">
@@ -1175,30 +1165,19 @@
                                     </li>
                                 ))}
                             </ul>
-                            
+
                             <p className="text-sm text-teal-100 mb-5 leading-relaxed">
-                                Diese Anliegen werden nur umgesetzt, wenn Menschen wie du sich engagieren.
-                                <br/><br/>
-                                Am <strong className="text-white">8. März 2025</strong> kannst du etwas bewirken: 
-                                Wähle Michael Grüebler in den Gemeinderat – für ein grüneres, sozialeres Volketswil.
+                                Informiere dich darüber, was Volketswil brauchen kann – auf grue.ch findest du Beiträge und Gedanken dazu.
                             </p>
-                            
+
                             <div className="space-y-3">
-                                <a 
-                                    href="https://www.grue.ch" 
+                                <a
+                                    href="https://www.grue.ch"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="block w-full bg-white text-teal-700 py-3 rounded-xl font-semibold text-center hover:bg-teal-50 transition"
                                 >
-                                    🌱 Michael Grüebler kennenlernen
-                                </a>
-                                <a 
-                                    href="https://gruene-usterland.ch/kontakt-gruene-schwerzenbach-volketswil/" 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-teal-500/30 text-white py-3 rounded-xl font-semibold text-center hover:bg-teal-500/50 transition"
-                                >
-                                    💚 Newsletter / Mitglied werden
+                                    🌱 grue.ch besuchen
                                 </a>
                             </div>
                         </div>
@@ -1227,20 +1206,19 @@
                         )}
                         
                         <p className="text-sm text-emerald-100 mb-5 leading-relaxed">
-                            Auch in deiner Gemeinde gibt es bestimmt Menschen, die sich für ähnliche Anliegen einsetzen. 
-                            Engagiere dich lokal – jede Stimme zählt!
+                            Schau ob es in deiner Ortschaft eine Grüne Partei gibt, bei der du dich engagieren könntest – lokal bewegen sich Dinge am schnellsten.
                         </p>
-                        
+
                         <div className="space-y-3">
-                            <a 
-                                href="https://gruene.ch" 
+                            <a
+                                href="https://gruene.ch"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block w-full bg-white text-emerald-700 py-3 rounded-xl font-semibold text-center hover:bg-emerald-50 transition"
                             >
                                 💚 Grüne Schweiz
                             </a>
-                            <button 
+                            <button
                                 onClick={() => {
                                     navigator.clipboard.writeText('Finde heraus, welcher Typ du bist: https://volkicheck.grue.ch');
                                     alert('Link kopiert! 📋');

@@ -93,7 +93,7 @@ LIMIT 10;
 
 SELECT 
     q.dimension,
-    COUNT(DISTINCT r.session_id) AS teilnehmer,
+    COUNT(DISTINCT r.participant_id) AS teilnehmer,
     ROUND(AVG(
         CASE r.response 
             WHEN 'sehr_wichtig' THEN 3
@@ -166,11 +166,11 @@ GROUP BY gender;
 -- =====================================================
 
 SELECT 
-    DATE(created_at) AS datum,
+    DATE(started_at) AS datum,
     COUNT(*) AS neue_teilnehmer,
     SUM(CASE WHEN completed_at IS NOT NULL THEN 1 ELSE 0 END) AS abgeschlossen
 FROM participants
-GROUP BY DATE(created_at)
+GROUP BY DATE(started_at)
 ORDER BY datum DESC;
 
 
@@ -191,7 +191,7 @@ SELECT
     ), 2) AS score
 FROM questions q
 JOIN responses r ON q.id = r.question_id
-JOIN participants p ON r.session_id = p.session_id
+JOIN participants p ON r.participant_id = p.id
 WHERE p.lives_in_volketswil = 1
 GROUP BY q.id
 ORDER BY score DESC;

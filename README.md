@@ -87,7 +87,7 @@ MIT License - frei verwendbar, auch für kommerzielle Zwecke.
 
 ## Autor
 
-Ein Projekt von [Michael Grüebler](https://github.com/grandgrue), Kandidat Gemeinderat Volketswil.
+Ein Projekt von [Michael Grüebler](https://github.com/grandgrue) – [grue.ch](https://www.grue.ch)
 
 ---
 
